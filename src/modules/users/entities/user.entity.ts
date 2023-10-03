@@ -70,6 +70,6 @@ export class User {
   @OneToMany(() => UserAddresses, (userAddresses) => userAddresses.user)
   userAddresses: UserAddresses[];
 
-  @OneToMany(() => Receipt, (receipts) => receipts.user)
+  @OneToMany(() => Receipt, (receipt) => receipt.user)
   receipts: Receipt[];
 }

@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Category } from 'src/modules/categories/entities/category.entity';
 import { ProductPicture } from 'src/modules/product_pictures/entities/product_picture.entity';
+import { ReceiptDetail } from 'src/modules/receipt-detail/entities/receipt-detail.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -41,4 +43,9 @@ export class Product {
 
   @OneToMany(() => ProductPicture, (product_picture) => product_picture.product)
   product_pictures: ProductPicture[];
+
+  @OneToMany(() => ReceiptDetail, (receiptDetail) => receiptDetail.productId, {
+    onDelete: 'CASCADE',
+  })
+  receiptDetails: ReceiptDetail[];
 }

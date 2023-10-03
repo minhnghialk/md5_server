@@ -95,7 +95,7 @@ __decorate([
     __metadata("design:type", Array)
 ], User.prototype, "userAddresses", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => receipt_entity_1.Receipt, (receipts) => receipts.user),
+    (0, typeorm_1.OneToMany)(() => receipt_entity_1.Receipt, (receipt) => receipt.user),
     __metadata("design:type", Array)
 ], User.prototype, "receipts", void 0);
 exports.User = User = __decorate([

@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductsController = void 0;
 const common_1 = require("@nestjs/common");
 const products_service_1 = require("./products.service");
-const update_product_dto_1 = require("./dto/update-product.dto");
 const swagger_1 = require("@nestjs/swagger");
 const find_product_dtc_1 = require("./dto/find-product-dtc");
 const platform_express_1 = require("@nestjs/platform-express");
@@ -73,8 +72,11 @@ let ProductsController = class ProductsController {
             throw new common_1.HttpException('Lỗi Controller', common_1.HttpStatus.BAD_REQUEST);
         }
     }
-    update(id, updateProductDto) {
-        return this.productsService.update(+id, updateProductDto);
+    update(id, file, body, req, res) {
+        const data = JSON.parse(body.product);
+        console.log('update product', data);
+        data.price = Number(data.price);
+        return this.productsService.update(+id, data);
     }
     async remove(id, res) {
         try {
@@ -145,10 +147,14 @@ __decorate([
 ], ProductsController.prototype, "findByName", null);
 __decorate([
     (0, common_1.Patch)(':id'),
+    (0, common_1.UseInterceptors)((0, platform_express_1.FileInterceptor)('avatar')),
     __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(1, (0, common_1.UploadedFile)()),
+    __param(2, (0, common_1.Body)()),
+    __param(3, (0, common_1.Req)()),
+    __param(4, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_product_dto_1.UpdateProductDto]),
+    __metadata("design:paramtypes", [String, Object, Object, Request, Object]),
     __metadata("design:returntype", void 0)
 ], ProductsController.prototype, "update", null);
 __decorate([

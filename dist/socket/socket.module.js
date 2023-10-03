@@ -13,12 +13,14 @@ const discord_bot_socket_1 = require("./discord.bot.socket");
 const jwt_service_1 = require("../modules/jwts/jwt.service");
 const typeorm_1 = require("@nestjs/typeorm");
 const user_socket_1 = require("./users/user.socket");
+const receipt_entity_1 = require("../modules/receipts/entities/receipt.entity");
+const receipt_detail_entity_1 = require("../modules/receipt-detail/entities/receipt-detail.entity");
 let SocketModule = class SocketModule {
 };
 exports.SocketModule = SocketModule;
 exports.SocketModule = SocketModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([receipt_entity_1.Receipt, receipt_detail_entity_1.ReceiptDetail])],
         providers: [
             discord_bot_socket_1.DiscordBotSocket,
             customer_chat_socket_1.CustomerChatSocket,

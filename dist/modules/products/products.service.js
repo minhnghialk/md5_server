@@ -78,11 +78,33 @@ let ProductsService = class ProductsService {
             throw new common_1.HttpException('Lỗi Service', common_1.HttpStatus.BAD_REQUEST);
         }
     }
-    update(id, updateProductDto) {
-        return `This action updates a #${id} product`;
+    async update(id, updateProductDto) {
+        try {
+            const currentProduct = await this.products.findOne({
+                where: {
+                    id: +id,
+                },
+            });
+            const updateProduct = await this.products.merge(currentProduct, updateProductDto);
+            console.log('updateProduct', updateProduct);
+            const result = await this.products.save(updateProduct);
+            return {
+                status: true,
+                data: result,
+                message: 'Product created successfully',
+            };
+        }
+        catch (err) {
+            return {
+                status: false,
+                data: null,
+                message: 'Lỗi service',
+            };
+        }
     }
     async remove(id) {
         try {
+            console.log('remove', id);
             const result = await this.products.delete(id);
             return {
                 status: true,
@@ -91,6 +113,7 @@ let ProductsService = class ProductsService {
             };
         }
         catch (err) {
+            console.log('remove - err', err);
             return {
                 status: false,
                 data: null,

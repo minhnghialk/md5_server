@@ -1,3 +1,4 @@
+import { Product } from 'src/modules/products/entities/product.entity';
 import { Receipt } from 'src/modules/receipts/entities/receipt.entity';
 import {
   Column,
@@ -20,5 +21,11 @@ export class ReceiptDetail {
   receipt: Receipt;
 
   @Column()
-  quantity: string;
+  productId: string;
+  @ManyToOne(() => Product, (product) => product.id, { onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'productId' })
+  product: Product;
+
+  @Column()
+  quantity: number;
 }

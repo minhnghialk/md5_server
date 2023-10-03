@@ -19,7 +19,7 @@ const customer_chat_socket_1 = require("./customer.chat.socket");
 let DiscordBotSocket = class DiscordBotSocket {
     constructor(customerChatSocket) {
         this.customerChatSocket = customerChatSocket;
-        this.botToken = 'MTE1Mzk4ODE5NzcwNjEwODk5Mg.GoRmrz.EElsCUOGF_6VQ9VmfVghgAX3Gq4Bn4PbVZynhc';
+        this.botToken = 'MTE1Mzk4ODE5NzcwNjEwODk5Mg.GYO-Vq.9FjxvfiDKXt2m3r_oqUKR6l2q-bYpmjXQ2kWJ8';
         this.guildId = '1153990231884824647';
     }
     onModuleInit() {

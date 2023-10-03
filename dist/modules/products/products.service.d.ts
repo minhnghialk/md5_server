@@ -21,7 +21,11 @@ export declare class ProductsService {
         data: Product[];
         message: string;
     }>;
-    update(id: number, updateProductDto: UpdateProductDto): string;
+    update(id: number, updateProductDto: UpdateProductDto): Promise<{
+        status: boolean;
+        data: Product;
+        message: string;
+    }>;
     remove(id: number): Promise<{
         status: boolean;
         data: import("typeorm").DeleteResult;

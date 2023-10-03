@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Product = void 0;
 const category_entity_1 = require("../../categories/entities/category.entity");
 const product_picture_entity_1 = require("../../product_pictures/entities/product_picture.entity");
+const receipt_detail_entity_1 = require("../../receipt-detail/entities/receipt-detail.entity");
 const typeorm_1 = require("typeorm");
 let Product = class Product {
     static find(arg0) {
@@ -54,6 +55,12 @@ __decorate([
     (0, typeorm_1.OneToMany)(() => product_picture_entity_1.ProductPicture, (product_picture) => product_picture.product),
     __metadata("design:type", Array)
 ], Product.prototype, "product_pictures", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => receipt_detail_entity_1.ReceiptDetail, (receiptDetail) => receiptDetail.productId, {
+        onDelete: 'CASCADE',
+    }),
+    __metadata("design:type", Array)
+], Product.prototype, "receiptDetails", void 0);
 exports.Product = Product = __decorate([
     (0, typeorm_1.Entity)()
 ], Product);

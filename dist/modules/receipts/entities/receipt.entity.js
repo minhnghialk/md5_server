@@ -9,11 +9,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Receipt = void 0;
+exports.Receipt = exports.ReceiptStatus = void 0;
 const typeorm_1 = require("typeorm");
 const receipts_enum_1 = require("../receipts.enum");
 const user_entity_1 = require("../../users/entities/user.entity");
 const receipt_detail_entity_1 = require("../../receipt-detail/entities/receipt-detail.entity");
+const guest_entity_1 = require("../../guest/entities/guest.entity");
+var ReceiptStatus;
+(function (ReceiptStatus) {
+    ReceiptStatus["SHOPPING"] = "SHOPPING";
+    ReceiptStatus["PENDING"] = "PENDING";
+    ReceiptStatus["ACCEPTED"] = "ACCEPTED";
+    ReceiptStatus["SHIPPING"] = "SHIPPING";
+    ReceiptStatus["DONE"] = "DONE";
+})(ReceiptStatus || (exports.ReceiptStatus = ReceiptStatus = {}));
 let Receipt = class Receipt {
     setCreateTime() {
         this.createAt = String(Date.now());
@@ -40,6 +49,17 @@ __decorate([
         nullable: true,
     }),
     __metadata("design:type", String)
+], Receipt.prototype, "guestId", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => guest_entity_1.Guest, (guest) => guest.receipts),
+    (0, typeorm_1.JoinColumn)({ name: 'guestId' }),
+    __metadata("design:type", guest_entity_1.Guest)
+], Receipt.prototype, "guest", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", String)
 ], Receipt.prototype, "guestName", void 0);
 __decorate([
     (0, typeorm_1.Column)({
@@ -56,13 +76,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({
         type: 'enum',
-        enum: receipts_enum_1.ReceiptStatus,
-        default: receipts_enum_1.ReceiptStatus.SHOPPING,
+        enum: ReceiptStatus,
+        default: ReceiptStatus.SHOPPING,
     }),
     __metadata("design:type", String)
 ], Receipt.prototype, "status", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
     __metadata("design:type", Boolean)
 ], Receipt.prototype, "paid", void 0);
 __decorate([
@@ -80,7 +102,7 @@ __decorate([
     __metadata("design:type", String)
 ], Receipt.prototype, "paidTime", void 0);
 __decorate([
-    (0, typeorm_1.OneToMany)(() => receipt_detail_entity_1.ReceiptDetail, (detail) => detail.receipt),
+    (0, typeorm_1.OneToMany)(() => receipt_detail_entity_1.ReceiptDetail, (receiptDetail) => receiptDetail.receipt),
     __metadata("design:type", Array)
 ], Receipt.prototype, "detail", void 0);
 __decorate([
@@ -88,7 +110,27 @@ __decorate([
     __metadata("design:type", String)
 ], Receipt.prototype, "createAt", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", String)
+], Receipt.prototype, "acceptedAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", String)
+], Receipt.prototype, "shipAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        nullable: true,
+    }),
+    __metadata("design:type", String)
+], Receipt.prototype, "doneAt", void 0);
+__decorate([
+    (0, typeorm_1.Column)({
+        default: 0,
+    }),
     __metadata("design:type", Number)
 ], Receipt.prototype, "total", void 0);
 __decorate([
